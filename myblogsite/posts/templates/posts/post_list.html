@@ -1,0 +1,127 @@
+{% extends 'posts/base.html' %}
+
+{% block content %}
+<div class="container mt-5 fade-in">
+    <h2 class="page-title">📝 All Blog Posts</h2>
+
+    {% if posts %}
+    <ul class="post-list">
+        {% for post in posts %}
+        <li class="post-item">
+            <div class="post-header">
+                <a href="{% url 'post_detail' post.pk %}" class="post-link">{{ post.title }}</a>
+                <span class="author-label">
+                    by
+                    <a href="{% url 'profile' post.post_author %}" class="author-link">{{ post.post_author }}</a>
+
+                </span>
+            </div>
+
+            {% if post.image %}
+            <div class="post-image">
+                <img src="{{ post.image.url }}" alt="Post Image">
+            </div>
+            {% endif %}
+        </li>
+        {% endfor %}
+    </ul>
+    {% else %}
+    <p class="no-posts">📭 No posts found.</p>
+    {% endif %}
+</div>
+
+<style>
+    .fade-in {
+        animation: fadeIn 0.5s ease-in-out;
+    }
+
+    @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(10px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+
+    .page-title {
+        font-size: 32px;
+        font-weight: 700;
+        color: #2c3e50;
+        margin-bottom: 30px;
+    }
+
+    .post-list {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
+
+    .post-item {
+        background-color: #ffffff;
+        border-radius: 16px;
+        padding: 24px;
+        margin-bottom: 24px;
+        box-shadow: 0 6px 16px rgba(0, 0, 0, 0.07);
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .post-item:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 10px 24px rgba(0, 0, 0, 0.1);
+    }
+
+    .post-header {
+        margin-bottom: 16px;
+    }
+
+    .post-link {
+        font-size: 22px;
+        font-weight: 600;
+        color: #2980b9;
+        text-decoration: none;
+    }
+
+    .post-link:hover {
+        text-decoration: underline;
+        color: #1abc9c;
+    }
+
+    .author-label {
+        font-size: 14px;
+        color: #7f8c8d;
+        margin-top: 4px;
+    }
+
+    .author-link {
+        color: #2980b9;
+        text-decoration: none;
+        font-weight: 500;
+    }
+
+    .author-link:hover {
+        color: #1abc9c;
+        text-decoration: underline;
+    }
+
+    .post-image {
+        margin-top: 20px;
+        text-align: center;
+    }
+
+    .post-image img {
+        max-width: 100%;
+        height: auto;
+        border-radius: 10px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+        transition: transform 0.3s ease;
+    }
+
+    .post-image img:hover {
+        transform: scale(1.02);
+    }
+
+    .no-posts {
+        font-size: 18px;
+        color: #888;
+        text-align: center;
+        margin-top: 40px;
+    }
+</style>
+{% endblock %}
